@@ -106,5 +106,6 @@ position: relative;
     top: 40px;
     text-align: center;
     font-size: 25px;
+    margin: -10px;
 `
 export {Img,Items,Target,List,dams}

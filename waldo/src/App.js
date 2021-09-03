@@ -2,18 +2,17 @@ import 'firebase/compat/firestore';
 import { react, useState, useEffect,useRef } from 'react'
 import './App.css';
 import {useAuthState} from 'react-firebase-hooks/auth'
-import { useCollectionData,useDocumentOnce,useDocumentData } from 'react-firebase-hooks/firestore'
+import {useDocumentData } from 'react-firebase-hooks/firestore'
 import { SingIn, SingOut } from './SingIn'
 import app from './firebase'
-import styled from 'styled-components'
+
 import { Img, Items, Target, List, dams,Check,Nav,Names,NamesList,Cronometer,DivNames,GlobalStyle,BestScore } from './App.stlye'
-import { addItem, getItems,updateItems } from './fireStore'
+import { AddItem, getItems,updateItems,updateUserItems } from './fireStore'
 
 const db = app.firestore()
 const auth=app.auth()
 function App() {
-  const cor = db.collection('coordinates').doc('Best-Score')
-  let ie='yep'
+let a
   
   const [user] = useAuthState(auth)
   const [count, setCount] = useState(false)
@@ -22,19 +21,26 @@ function App() {
   const [statusPoseidon,setStatusPoseidon]=useState(false)
   const [statusZeus, setStatusZeus] = useState(false)
     const [statusGladiator,setStatusGladiator]=useState(false)
-  const [seconds, setSeconds] = useState(0)
-  const [minutes,setMinutes]=useState(0)
+  
   const [timer, setTimer] = useState(0)
   const increment = useRef(null)
-  const [score, setScore] = useState([])
-  const [bestScore,setBestScore]=useState(0)
+  
+  const [bestScore, setBestScore] = useState(0)
+  
+ if (user) {
+        a=db.collection(user.uid).doc('Best-Score')
+        
+       
+     // setUserInfo(await (await GetItemUser(user.uid, 'Best-Score')).data())
+ }
+    const yy=useDocumentData(a)[0]
 
   
   function targetBox(e) {
     setCount(!count)
     setCountX(e.pageX)
     setCountY(e.pageY)
-    console.log(user.providerData[0].uid)
+    console.log(yy)
   }
 
   useEffect(() => {
@@ -43,38 +49,59 @@ function App() {
     const Gladiator=    { id: 'Gladiator', Xbegin: 444, Xend: 483, Ybegin: 252, Yend: 362, status: false }
     const bestScore={id:'Best-Score',score:'',value:100000000000000000,array:[]}
   
-  addItem(Zeus)
-  addItem(Poseidon)
-    addItem(Gladiator)
+  AddItem(Zeus)
+  AddItem(Poseidon)
+    AddItem(Gladiator)
   }, [])
   
   useEffect(() => {
+    
     async function idk() {
       setBestScore(await (await getItems('Best-Score')).data())
+      if (user) {
+       
+     // setUserInfo(await (await GetItemUser(user.uid, 'Best-Score')).data())
     }
+    }
+    idk()
     if (statusPoseidon && statusZeus && statusGladiator) {uploadingScore() }
 
-    idk()
+    
   },)
    function uploadingScore() {
     
      if (statusPoseidon && statusZeus && statusGladiator) {
-          Pause()
+       
+       const trueTimer=timer
        console.log('uploading score')
       const result = formatTime()
-       setScore(score.concat(timer))
-       const min = Math.min(...score)
-       console.log(score)
-       console.log(min)
-              if (bestScore.value > min) {
-              console.log('update o best score mano')
+       //setScore(bestScore.scores.concat(timer))
+       updateItems('Best-Score', 'scores', bestScore.scores.concat(timer))
+       const min = Math.min(...bestScore.scores)
+       
+              if (min > timer) {
+                console.log('update o best score mano')
+                let name=prompt("You just beat the highets score! Please enter your name so we can register on the site")
               updateItems('Best-Score', 'value', timer)
-              updateItems('Best-Score', 'score', result)
+                updateItems('Best-Score', 'score', result)
+                updateItems('Best-Score', 'bestName', name)     
                         }
       setTimer(0)
      setStatusPoseidon(false)
      setStatusZeus(false)
-     setStatusGladiator(false)
+       setStatusGladiator(false)
+       if (user) {
+                              console.log(trueTimer)
+                              updateUserItems(user.uid,'Best-Score', 'scores', yy.scores.concat(timer))
+                            const min = Math.min(...yy.scores)
+                            console.log(yy.scores)
+                            console.log(min)
+                        if (min > timer) {
+                          console.log('se ai exsite amor ooo')
+                        
+                        updateUserItems(user.uid,'Best-Score', 'score', result)
+                                  }
+                                          }
       }
    }
   
@@ -98,6 +125,7 @@ function App() {
                 console.log('End Game')
                 setStatusPoseidon(true)
                 updateItems(poseidon.id, 'status', true)
+                Pause()
                 
               }
             }
@@ -112,6 +140,7 @@ function App() {
                 Pause()
                  setStatusZeus(true)
               updateItems(zeus.id, 'status', true)
+              Pause()
               
                   }
             else {
@@ -131,6 +160,7 @@ function App() {
               
               updateItems(gladiator.id,'status',true)
               setStatusGladiator(true)
+              Pause()
               
             }
             else {
@@ -175,7 +205,8 @@ function App() {
       </Nav>
       <DivNames>
         <Cronometer>{formatTime()}</Cronometer>
-        <BestScore color='white'>Best Score {bestScore.score}</BestScore>
+        <BestScore color='white'>Best Score on the game{bestScore.bestName ? <BestScore>{bestScore.bestName}</BestScore>
+          : <BestScore>Anonymous</BestScore>}{bestScore.score}</BestScore>
         <NamesList>
           <Names>Poseidon {statusPoseidon? <Check  onClick={defaults} type="checkbox" defaultChecked />
             : <input onClick={defaults}  type="checkbox" />}</Names>
@@ -184,6 +215,7 @@ function App() {
           <Names>Gladiator {statusGladiator ? <Check  onClick={defaults} type="checkbox" defaultChecked />
             : <input onClick={defaults}  type="checkbox" />} </Names>
         </NamesList>
+        <BestScore >Your Best Score {yy?<BestScore>{yy.score}</BestScore>:<BestScore>login to record your scores</BestScore> }</BestScore>
       </DivNames>
 
       <Img onClick={targetBox} src='https://i.pinimg.com/originals/04/f4/c1/04f4c1fdc7eb4b71de3e90caebc882dc.jpg' />
