@@ -3,45 +3,12 @@ import styled from 'styled-components'
 import {createGlobalStyle }  from 'styled-components'
 
 
- const Img = styled.img`
-  width: 1000px;
-  height:700px;
-     position: absolute;
-    left: 23%;
-    top: 20%;
-  `
-   const Items = styled.li`
-  color: black;
-  list-style: none;
-  cursor: pointer;
-  `
-   const List = styled.ul`
-   position:absolute;
-    top:${(props)=>props.countY}px;
-left:${(props)=>props.countX+40}px;
-  background-color:aliceblue;
-  `
-  const Target = styled.span`
-  height: 45px;
-  width: 45px;
-  background-color: none;
-  border-radius: 50%;
-  display: inline-block;
-  position:absolute;
-  top:${(props)=>props.countY-25}px;
-  left:${(props)=>props.countX-25}px;
-border: #181917;
-    border-style: dashed;
-    border-width: 8px;
-`
+ 
 export const ButtonLabel = styled.label`
 font-size: 25px;
 color: white;
 `
- const fuck=()=> {
-    console.log('fuck you')
- }
-const dams = 'shit'
+ 
 export const Check = styled.input`
 
 &:checked{
@@ -108,4 +75,4 @@ position: relative;
     font-size: 25px;
     margin: -10px;
 `
-export {Img,Items,Target,List,dams}
+export {Img,Items,Target,List}

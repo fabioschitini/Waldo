@@ -1,6 +1,6 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
-import {ButtonSingIn} from './App.stlye'
+import {ButtonSingIn} from '../style/App.stlye'
 import app from './firebase'
 import { AddItemUser,GetItemUser } from './fireStore'
 const auth = app.auth()
