@@ -75,4 +75,3 @@ position: relative;
     font-size: 25px;
     margin: -10px;
 `
-export {Img,Items,Target,List}

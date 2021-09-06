@@ -29,7 +29,8 @@ let a
  }
   let b = db.collection('coordinates').doc('Best-Score')
   const xx = useDocumentData(b)[0]
-    const yy=useDocumentData(a)[0]
+  const yy = useDocumentData(a)[0]
+  
 
   
   function targetBox(e) {
