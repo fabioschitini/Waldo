@@ -12,11 +12,15 @@ export const SingIn = () => {
     
     const response = await auth.signInWithPopup(provider)
     
-    const test = await (await GetItemUser(response.user.uid, 'Best-Score')).data()
-    if (!test) {
-        AddItemUser(response.user.uid,{id:'Best-Score'})
+    const test = await GetItemUser(response.user.uid, 'Best-Score')
+    //const test = await await db.collection(response.user.uid).get()
+    if (test) {
+      let testData = await test.data()
+      if (!testData) {
+        AddItemUser(response.user.uid, { id: 'Best-Score' })
+      }
     }
-console.log('Already added mate')  }
+  }
   return (
     <div>
  <ButtonSingIn onClick={singInWithGoogle}>Sing In</ButtonSingIn>

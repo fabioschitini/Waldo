@@ -1,5 +1,5 @@
 import 'firebase/compat/firestore';
-import {  useState, useEffect,useRef } from 'react'
+import {  useState,useRef } from 'react'
 import {useAuthState} from 'react-firebase-hooks/auth'
 import {useDocumentData } from 'react-firebase-hooks/firestore'
 import { SingIn, SingOut } from './firebase/SingIn'
@@ -7,7 +7,7 @@ import app from './firebase/firebase'
 import { Img, Items, Target, List } from './style/game.stlye'
 import {Names,NamesList,Cronometer,DivNames,BestScore,Check } from './style/scoreInformation.style'
 import { Nav,GlobalStyle } from './style/App.stlye'
-import { AddItem, getItems,updateItems,updateUserItems } from './firebase/fireStore'
+import {  getItems,updateItems,updateUserItems } from './firebase/fireStore'
 
 const db = app.firestore()
 const auth=app.auth()
@@ -22,7 +22,7 @@ let a
     const [statusGladiator,setStatusGladiator]=useState(false)
   const [timer, setTimer] = useState(0)
   const increment = useRef(null)
-  let op;
+  
  if (user) {
         a=db.collection(user.uid).doc('Best-Score')
      // setUserInfo(await (await GetItemUser(user.uid, 'Best-Score')).data())

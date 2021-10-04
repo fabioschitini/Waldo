@@ -29,7 +29,7 @@ export async function AddItemUser(collection,item) {
 
     try {
 
-        const response = await db.collection( collection).doc(item.id).set(item);
+        const response = await db.collection( collection).doc(item.name).set(item);
         return response
     }
     catch (error) {
