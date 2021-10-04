@@ -1,7 +1,7 @@
 
 # Waldo
-A simple shopping cart application.From The Odin Project's curriculum:
-https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/memory-card
+A simple Game of Where is Waldo.From The Odin Project's curriculum:
+https://www.theodinproject.com/paths/full-stack-javascript/courses/javascript/lessons/where-s-waldo-a-photo-tagging-app
 
 ## Feature
 * A simple game of Where Is Waldo where you have to fin certain characters in an image
