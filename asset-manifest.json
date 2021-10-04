@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/Waldo/static/js/main.5afe406e.chunk.js",
+    "main.js.map": "/Waldo/static/js/main.5afe406e.chunk.js.map",
+    "runtime-main.js": "/Waldo/static/js/runtime-main.0deb504c.js",
+    "runtime-main.js.map": "/Waldo/static/js/runtime-main.0deb504c.js.map",
+    "static/js/2.883f8381.chunk.js": "/Waldo/static/js/2.883f8381.chunk.js",
+    "static/js/2.883f8381.chunk.js.map": "/Waldo/static/js/2.883f8381.chunk.js.map",
+    "index.html": "/Waldo/index.html",
+    "static/js/2.883f8381.chunk.js.LICENSE.txt": "/Waldo/static/js/2.883f8381.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0deb504c.js",
+    "static/js/2.883f8381.chunk.js",
+    "static/js/main.5afe406e.chunk.js"
+  ]
+}
